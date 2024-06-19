@@ -21,17 +21,17 @@ conda activate mj
   - `mujoco.MjModel.from_xml_string(xml_string)`: create from a xml string
 - **Some important data in `MjModel`**
 
-|       Name        | Meaning                            |   Value   |
-| :---------------: | ---------------------------------- | :-------: |
-|   `MjModel.nq`    | number of generalized coordinates  | dim(qpos) |
-|   `MjModel.nv`    | number of degrees of freedom       | dim(qvel) |
-|   `MjModel.nu`    | number of actuators/controls       | dim(ctrl) |
-|   `MjModel.na`    | number of activation states        |     -     |
-|  `MjModel.nbody`  | number of activation states        |     -     |
-|  `MjModel.ngeom`  | number of activation states        |     -     |
-|  `MjModel.nsite`  | number of activation states        |     -     |
-| `MjModel.nsensor` | number of activation states        |     -     |
-|  `MjModel.njnt`   | Cartesian orientation of body fram |     -     |
+|       Name        | Meaning                           |   Value   |
+| :---------------: | --------------------------------- | :-------: |
+|   `MjModel.nq`    | number of generalized coordinates | dim(qpos) |
+|   `MjModel.nv`    | number of degrees of freedom      | dim(qvel) |
+|   `MjModel.nu`    | number of actuators/controls      | dim(ctrl) |
+|   `MjModel.na`    | number of activation states       |     -     |
+|  `MjModel.nbody`  | number of bodies                  |     -     |
+|  `MjModel.ngeom`  | number of geoms                   |     -     |
+|  `MjModel.nsite`  | number of sites                   |     -     |
+| `MjModel.nsensor` | number of sensors                 |     -     |
+|  `MjModel.njnt`   | number of joints                  |     -     |
 
 - **Some important data in `MjData`**
 
