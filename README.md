@@ -14,26 +14,17 @@ conda env create -f environment.yml
 conda activate mj
 ```
 
-## Some Useful APIs
+## Some important data in `MjModel`
 
-- **Static factory functions that create a new `mujoco.MjModel` instance**
-  - `mujoco.MjModel.from_xml_path(path)`: create from a xml file
-  - `mujoco.MjModel.from_xml_string(xml_string)`: create from a xml string
-- **Some important data in `MjModel`**
+|             Name              | Meaning                           | Value/Size |
+| :---------------------------: | --------------------------------- | :--------: |
+|         `MjModel.nq`          | number of generalized coordinates | dim(qpos)  |
+|         `MjModel.nv`          | number of degrees of freedom      | dim(qvel)  |
+|         `MjModel.nu`          | number of actuators/controls      | dim(ctrl)  |
+| `MjMOdel.actuator_ctrlrange`  | range of controls                 |  (nu x 2)  |
+| `MjMOdel.actuator_forcerange` | range of forces                   |  (nu x 2)  |
 
-|       Name        | Meaning                           |   Value   |
-| :---------------: | --------------------------------- | :-------: |
-|   `MjModel.nq`    | number of generalized coordinates | dim(qpos) |
-|   `MjModel.nv`    | number of degrees of freedom      | dim(qvel) |
-|   `MjModel.nu`    | number of actuators/controls      | dim(ctrl) |
-|   `MjModel.na`    | number of activation states       |     -     |
-|  `MjModel.nbody`  | number of bodies                  |     -     |
-|  `MjModel.ngeom`  | number of geoms                   |     -     |
-|  `MjModel.nsite`  | number of sites                   |     -     |
-| `MjModel.nsensor` | number of sensors                 |     -     |
-|  `MjModel.njnt`   | number of joints                  |     -     |
-
-- **Some important data in `MjData`**
+## Some important data in `MjData`
 
 |         Name          | Meaning                             |    Size     |
 | :-------------------: | ----------------------------------- | :---------: |
@@ -41,20 +32,26 @@ conda activate mj
 |     `MjData.qvel`     | Velocity                            |  (nv x 1)   |
 |     `MjData.xpos`     | Cartesian position of body frame    | (nbody x 3) |
 |    `MjData.xquat`     | Cartesian orientation of body frame | (nbody x 4) |
-|     `MjData.xmat`     | Cartesian orientation of body fram  | (nbody x 9) |
+|     `MjData.xmat`     | Cartesian orientation of body frame | (nbody x 9) |
 |  `MjData.geom_xpos`   | Cartesian geom position             | (ngeom x 3) |
 |   `MjData.geom_mat`   | Cartesian geom orientation          | (ngeom x 9) |
-|  `MjData.site_xpos`   | Cartesian site position             | (nsite x 3) |
-|  `MjData.site_xmat`   | Cartesian site orientation          | (nsite x 9) |
 |     `MjData.ctrl`     | External control (action)           |  (nu x 1)   |
 | `MjData.qfrc_applied` | Applied generalized force           |  (nv x 1)   |
 | `MjData.xfrc_applied` | Applied Cartesian force/torque      | (nbody x 6) |
 
+## Some Useful APIs
+
+- **Static factory functions that create a new `mujoco.MjModel` instance**
+
+  - `mujoco.MjModel.from_xml_path(path)`: create from a xml file
+  - `mujoco.MjModel.from_xml_string(xml_string)`: create from a xml string
+
 - **Functions**
+  - `mujoco.mj_reset_data(model, data)`: Reset data to defaults.
   - `mujoco.mj_step(model, data)`: Advance simulation.
   - `mujoco.mj_forward(model, data)` : Compute forward kinematic
   - `mujoco.mj_inverse(model, data)` : Compute inverse kinematic
-- **Passive viewer**
+- **Passive `mujoco.viewer`**
   - The `mujoco.viewer.launch_passive(model, data, *, key_callback=None,show_left_ui=True, show_right_ui=True)` returns a handle which can be used to interact with the viewer. It can be used as a context manager.
   - Arguments:
     - **model:** MjModel instance.
@@ -63,8 +60,8 @@ conda activate mj
     - **show_left_ui:** if show left ui.
     - **show_right_ui:** if show right ui.
   - Attributes (incomplete):
-    - `viewer.is_running()`: check viewer window is still running.
-    - `viewer.sync()`: update MjModel and MjData render the model after a physic step.(call after `mujoco.mj_step()`)
+    - `viewer.is_running()`: check if viewer window is still running.
+    - `viewer.sync()`: update MjModel and MjData, render the model after a physic step.(call after `mujoco.mj_step()`)
     - `viewer.close()`: call after you are done with the viewer, if you do not use the viewer as a context manager.
     - `cam`, `opt`, and `pert` properties: correspond to `mjvCamera`, `mjvOption`, and `mjvPerturb` structs, respectively.
 
