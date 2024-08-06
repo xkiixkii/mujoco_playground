@@ -1,0 +1,14 @@
+<mujoco>
+	<worldbody>
+		<light diffuse=".5 .5 .5" pos="0 0 5" directional="true" dir="0 0 -1" />
+		<geom name="floor" type="plane" size="10 10 10" pos="0 0 0" rgba="1 1 1 1" />
+		<body>
+            <inertial mass="1" pos="0 0 3" diaginertia="1e-3 1e-3 1e-3"/>
+            <joint name="slider" pos="0 0 3" type="slide" axis="1 0 0" range="-5 5" damping="0"/>
+			<geom name="cube" type="box" size="1 1 1" pos="0 0 3" rgba="1 0 0 1" />
+		</body>
+	</worldbody>
+    <actuator>
+        <position name="pos_x" joint="slider" ctrlrange="-.5 .5" forcerange="10 10" kp="10"/>
+    </actuator>
+</mujoco>

@@ -1,0 +1,11 @@
+<mujoco>
+	<worldbody>
+		<light diffuse=".5 .5 .5" pos="0 0 5" directional="true" dir="0 0 -1" />
+		<geom name="floor" type="plane" size="10 10 10" pos="0 0 0" rgba="1 1 1 1" />
+		<body>
+            <joint type="free"/>
+            <!-- <freejoint/> -->
+			<geom name="cube" type="box" size="1 1 1" pos="0 0 3" rgba="1 0 0 1" />
+		</body>
+	</worldbody>
+</mujoco>

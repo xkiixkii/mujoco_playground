@@ -1,0 +1,20 @@
+<mujoco>
+	<extension>
+		<plugin plugin="mujoco.elasticity.solid" />
+	</extension>
+	<worldbody>
+		<light pos="0.3 0 1.5" dir="0 0 -1" directional="true" />
+		<geom name="floor" pos="0 0 0" size="0 0 0.05" type="plane" />
+		<geom name="platform" pos=".65 0 .15" size=".4 .2 .3" type="box" rgba="1 0 0 1" />
+		<body name="insole_fixed" pos=".15 -.05 .456">
+			<flexcomp name="insole" mass=".5" dim="3" type="gmsh" file="insole.msh" rgba=".1 .9 .1 1">
+				<edge equality="true" />
+				<plugin plugin="mujoco.elasticity.solid">
+					<config key="young" value="8e4" />
+					<config key="poisson" value="0.2" />
+					<config key="damping" value=".0001" />
+				</plugin>
+			</flexcomp>
+		</body>
+	</worldbody>
+</mujoco>
