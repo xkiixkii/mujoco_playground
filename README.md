@@ -102,7 +102,7 @@ There are 2 ways to create your deformable object.
 - Using [(world)body/flexcomp](https://mujoco.readthedocs.io/en/stable/XMLreference.html#body-flexcomp)
 
 Here is the example of creating a deformable insole from tetrahedral mesh.
-MuJoCo offers a range of [plugins](https://github.com/google-deepmind/mujoco/tree/main/plugin/elasticity) for deformable objects, allowing users to set the physical parameters of the objects. 
+MuJoCo offers a range of [plugins](https://github.com/google-deepmind/mujoco/tree/main/plugin/elasticity) for deformable objects, allowing users to set the physical parameters of the objects.
 **Note:** The solid plugin only supports tetrahedral meshes in .gmsh format, and MuJoCo only supports reading tetrahedral meshes in .gmsh format. If your mesh is in .stl, .obj, or other triangular mesh formats, please use the membrane plugin or convert your mesh file to a tetrahedral mesh using [GMSH software](https://gmsh.info/).
 
 ```xml
@@ -128,7 +128,9 @@ MuJoCo offers a range of [plugins](https://github.com/google-deepmind/mujoco/tre
 </mujoco>
 
 ```
+
 ![exp_4](demos/pics/exp_4.gif)
+
 ### Convert URDF to MJCF
 
 MuJoCo is able to load Model from URDF directly, or you can use the built-in compiler to create a new MJCF from URDF. The compile binary is typically located in the bin directory of your MuJoCo installation.
@@ -142,7 +144,7 @@ path/to/mujoco/bin/compile  your_urdf.urdf  your_mjcf.xml
 
 ## Python Binding
 
-### Some important data in `MjModel`
+### Some important data in `MjModel` (see more [here](https://mujoco.readthedocs.io/en/stable/APIreference/APItypes.html#mjmodel))
 
 |             Name              | Meaning                           | Value/Size |
 | :---------------------------: | --------------------------------- | :--------: |
@@ -187,7 +189,7 @@ You can access a specific body frame for by calling `MjModel.body(id: int)` or `
 
 You can access any other view of MjObj type by calling `MjModel.geom()` `MjModel.sensor()` `MjModel.key()` etc..
 
-### Some important data in `MjData`
+### Some important data in `MjData` (see more [here](https://mujoco.readthedocs.io/en/stable/APIreference/APItypes.html#mjdata))
 
 |         Name          | Meaning                             |    Size     |
 | :-------------------: | ----------------------------------- | :---------: |
@@ -201,6 +203,15 @@ You can access any other view of MjObj type by calling `MjModel.geom()` `MjModel
 |     `MjData.ctrl`     | External control (action)           |  (nu x 1)   |
 | `MjData.qfrc_applied` | Applied generalized force           |  (nv x 1)   |
 | `MjData.xfrc_applied` | Applied Cartesian force/torque      | (nbody x 6) |
+
+**Flex Object information**
+| Name | Meaning | Size |
+| :-------------------: | ----------------------------------- | :---------: |
+| `MjData.flexvert_xpos` | Cartesian flex vertex positions | (nflexvert x 3) |
+| `MjData.flexelem_aabb` | flex element bounding boxes (center, size) | (nflexelem x 6) |
+| `MjData.flexedge_J` | flex edge Jacobian | (nflexedge x nv) |
+| `MjData.flexedge_length` | flex edge Jacobian | (nbody x 9) |
+| `MjData.flexedge_velocity` | flex edge lengths | (nflexedge x 1) |
 
 Same as MjModel, you can get a `_MjDataBodyViews` by calling `MjData.body(id: int)` or `MjData.body(name: str)`
 
@@ -237,7 +248,8 @@ Same as MjModel, you can get a `_MjDataBodyViews` by calling `MjData.body(id: in
   - `mujoco.mj_reset_data(model, data)`: Reset data to defaults.
   - `mujoco.mj_step(model, data)`: Advance simulation.
   - `mujoco.mj_forward(model, data)` : Compute forward kinematic without integrating in time.
-  - `mujoco.mju_str2Type(str)`: Convert [mjtObj](https://mujoco.readthedocs.io/en/latest/APIreference/APItypes.html#mjtobj) type name to type id 
+  - `mujoco.mju_str2Type(str)`: Convert [mjtObj](https://mujoco.readthedocs.io/en/latest/APIreference/APItypes.html#mjtobj) type name to type id
+  Available name strings for MuJoCo 3.1.6 are: **"body", "xbody", "joint", "dof", "geom", "site", "camera", "light", "flex", "mesh", "skin", "hfield", "texture", "material", "pair", "exclude", "equality", "tendon", "actuator", "sensor", "numeric", "text", "tuple", "key", "plugin"**
   - `mujoco.mj_id2name(model, type, id)`: Get name of object with the specified mjtObj type (**int**) and id, returns None if name not found.
   - `mujoco.mj_name2id(model, type, name)`: Get id of object with the specified mjtObj type (**int**) and name, returns -1 if id not found.
   - `mujoco.mju_euler2Quat(quat, euler, seq)`: Convert sequence of Euler angles (radians) to quaternion. seq[0,1,2] must be in 'xyzXYZ', lower/upper-case mean intrinsic/extrinsic rotations.
