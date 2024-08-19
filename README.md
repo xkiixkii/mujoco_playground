@@ -40,9 +40,9 @@ Let's start with a simple example
 Drag this xml file into simulation, you should get the following model:
 ![exp_1](demos/pics/exp_1.png)
 
-### Make your body move
+### Get your body moving
 
-To make your body movable, you have to create a joint element. Joint creates motion degrees of freedom between the body where it is defined and the body’s parent.
+To make your body movable, you have to create a [joint element](https://mujoco.readthedocs.io/en/stable/XMLreference.html#body-joint). Joint creates motion degrees of freedom between the body where it is defined and the body’s parent.
 
 In MuJoCo there are 4 different types of joint: **free, ball, slide** and **hinge**.
 
@@ -71,7 +71,7 @@ Example: add a free joint to the cube in previous example
 
 ### Control your body
 
-To Control your body, you need to define the \<actuator>\</actuator> tag. Actuators in MuJoCo are used to apply forces, torques, or control inputs to the joints in your model.
+To Control your body, you need to define the \<actuator>  tag, attributes see [here](https://mujoco.readthedocs.io/en/stable/XMLreference.html#actuator-general). Actuators in MuJoCo are used to apply forces, torques, or control inputs to the joints in your model.
 
 Here we have a slide joint allowing motion along the x-axis, and a positional actuator attached to the slide joint.
 
@@ -136,10 +136,10 @@ MuJoCo offers a range of [plugins](https://github.com/google-deepmind/mujoco/tre
 MuJoCo is able to load Model from URDF directly, or you can use the built-in compiler to create a new MJCF from URDF. The compile binary is typically located in the bin directory of your MuJoCo installation.
 **NOTE: If some parts of your model are depended on meshes, you have to use the [URDF extensions](https://mujoco.readthedocs.io/en/stable/modeling.html#curdf)**
 
-Run the command and you will get a MJCF.
+Run the command and you will get a MJCF in your target directory.
 
 ```bash
-path/to/mujoco/bin/compile  your_urdf.urdf  your_mjcf.xml
+path/to/mujoco/bin/compile  path/to/your_urdf.urdf  path/to/your_mjcf.xml
 ```
 
 ## Python Binding
@@ -244,7 +244,7 @@ Same as MjModel, you can get a `_MjDataBodyViews` by calling `MjData.body(id: in
   - `mujoco.MjModel.from_xml_path(path)`: create from a xml file
   - `mujoco.MjModel.from_xml_string(xml_string)`: create from a xml string
 
-- **[Functions](https://mujoco.readthedocs.io/en/latest/APIreference/APIfunctions.html#)**
+- **Functions (see all [here](https://mujoco.readthedocs.io/en/latest/APIreference/APIfunctions.html#))**
   - `mujoco.mj_reset_data(model, data)`: Reset data to defaults.
   - `mujoco.mj_step(model, data)`: Advance simulation.
   - `mujoco.mj_forward(model, data)` : Compute forward kinematic without integrating in time.
@@ -253,7 +253,7 @@ Same as MjModel, you can get a `_MjDataBodyViews` by calling `MjData.body(id: in
   - `mujoco.mj_id2name(model, type, id)`: Get name of object with the specified mjtObj type (**int**) and id, returns None if name not found.
   - `mujoco.mj_name2id(model, type, name)`: Get id of object with the specified mjtObj type (**int**) and name, returns -1 if id not found.
   - `mujoco.mju_euler2Quat(quat, euler, seq)`: Convert sequence of Euler angles (radians) to quaternion. seq[0,1,2] must be in 'xyzXYZ', lower/upper-case mean intrinsic/extrinsic rotations.
-- **Passive `mujoco.viewer`**
+- **Passive `mujoco.viewer`** (details [here](https://mujoco.readthedocs.io/en/stable/python.html#passive-viewer))
   - The `mujoco.viewer.launch_passive(model, data, *, key_callback=None,show_left_ui=True, show_right_ui=True)` returns a handle which can be used to interact with the viewer. It can be used as a context manager.
   - Arguments:
     - **model:** MjModel instance.
